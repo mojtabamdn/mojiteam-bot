@@ -1,14 +1,24 @@
 const TelegramBot = require("node-telegram-bot-api");
+  const http = require("http");
 
   const TOKEN = process.env.BOT_TOKEN;
+  const PORT = process.env.PORT || 3000;
 
   if (!TOKEN) {
     console.error("BOT_TOKEN environment variable is required");
     process.exit(1);
   }
 
-  const bot = new TelegramBot(TOKEN, { polling: true });
+  // Health check server so Railway knows the service is alive
+  const server = http.createServer((req, res) => {
+    res.writeHead(200);
+    res.end("OK");
+  });
+  server.listen(PORT, () => {
+    console.log("Health server running on port", PORT);
+  });
 
+  const bot = new TelegramBot(TOKEN, { polling: true });
   console.log("Bot started...");
 
   const mainKeyboard = {
@@ -30,11 +40,7 @@ const TelegramBot = require("node-telegram-bot-api");
   bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
     const firstName = msg.from.first_name || "کاربر";
-    bot.sendMessage(
-      chatId,
-      `سلام ${firstName}! 👋\nخوش اومدی.`,
-      mainKeyboard
-    );
+    bot.sendMessage(chatId, `سلام ${firstName}! 👋\nخوش اومدی.`, mainKeyboard);
   });
 
   bot.on("message", (msg) => {
@@ -51,5 +57,7 @@ const TelegramBot = require("node-telegram-bot-api");
   process.on("SIGTERM", () => {
     console.log("SIGTERM received, shutting down...");
     bot.stopPolling();
+    server.close();
     process.exit(0);
   });
+  
