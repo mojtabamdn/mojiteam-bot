@@ -1,15 +1,16 @@
 {
-    "name": "mojiteam-bot",
-    "version": "1.0.0",
-    "description": "Mojiteam Telegram Bot",
-    "main": "index.js",
-    "scripts": {
-      "start": "node index.js"
-    },
-    "dependencies": {
-      "node-telegram-bot-api": "^0.66.0"
-    },
-    "engines": {
-      "node": ">=18"
-    }
+  "name": "mojiteam-bot",
+  "version": "2.0.0",
+  "description": "Mojiteam Telegram Bot - Full Featured",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "^0.66.0",
+    "better-sqlite3": "^9.4.3"
+  },
+  "engines": {
+    "node": ">=18"
   }
+}

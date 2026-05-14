@@ -1,6 +1,6 @@
 [build]
-  builder = "nixpacks"
+builder = "nixpacks"
 
-  [deploy]
-  startCommand = "npm start"
-  restartPolicyType = "always"
+[deploy]
+startCommand = "npm start"
+restartPolicyType = "always"
